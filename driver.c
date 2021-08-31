@@ -48,6 +48,16 @@ int main(int argc, char** argv) {
 
 	// Temp print out TODO: logging functionality
 	printf("out_sec: %d\n", out_sec);
-	if (log_file != NULL) printf("log_file: %s\n", log_file);	
+	if (log_file != NULL) printf("log_file: %s\n", log_file);
+	
+	char* file;
+	int addresult, saveresult;
+
+	addresult = addmsg('a', "hello world");
+	clearlog();
+	file = getlog();
+	saveresult = savelog("filename");
+	printf("%d, %s, %d", addresult, file, saveresult);
+	
 	return EXIT_SUCCESS;
 }

@@ -1,3 +1,5 @@
+#ifndef LOG_H
+#define LOG_H
 #include <time.h>
 
 typedef struct data_struct {
@@ -11,3 +13,4 @@ void clearlog();
 char* getlog();
 int savelog(char* filename);
 
+#endif
