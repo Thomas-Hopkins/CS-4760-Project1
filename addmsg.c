@@ -7,14 +7,14 @@
 
 int addmsg(const char type, const char* msg) {
 	// Declare the new item and it's size
-	list_t* new_item;
+	list_log* new_item;
 	int item_size;
 
 	// Initialize the item size
-	item_size = sizeof(list_t) + strlen(msg) + 1;
+	item_size = sizeof(list_log) + strlen(msg) + 1;
 
 	// Attempt to allocate space for the new item
-	if ((new_item = (list_t *)(malloc(item_size))) ==  NULL) {
+	if ((new_item = (list_log *)(malloc(item_size))) ==  NULL) {
 		// Failed to add new item
 		return -1;
 	}
@@ -22,7 +22,7 @@ int addmsg(const char type, const char* msg) {
 	// Set item's data members
 	new_item->item.time = time(NULL);
 	new_item->item.type = type;
-	new_item->item.string = (char *)new_item + sizeof(list_t);
+	new_item->item.string = (char *)new_item + sizeof(list_log);
 	
 	// Copy the string into the item
 	strcpy(new_item->item.string, msg);
@@ -35,5 +35,6 @@ int addmsg(const char type, const char* msg) {
 	}
 
 	tailptr = new_item;
+	listlog_size++;
 	return 0;
 }

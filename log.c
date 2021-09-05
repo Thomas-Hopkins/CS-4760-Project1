@@ -4,7 +4,8 @@
 typedef struct list_struct {
 	data_t item;
 	struct list_struct* next;
-} list_t;
+} list_log;
 
-static list_t* headptr = NULL;
-static list_t* tailptr = NULL;
+static list_log* headptr = NULL;
+static list_log* tailptr = NULL;
+static int listlog_size = 0;

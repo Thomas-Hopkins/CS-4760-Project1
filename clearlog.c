@@ -6,5 +6,12 @@
 
 void clearlog() {
 	// TODO: release all storage for the list
-	return;
+	while (listlog_size != 0) {
+		list_log* tmp = tailptr;
+		tailptr = tailptr->next;
+		free(tmp);
+		tmp = NULL;
+		listlog_size--;
+	}
 }
+

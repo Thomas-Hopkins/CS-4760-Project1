@@ -54,9 +54,9 @@ int main(int argc, char** argv) {
 	int addresult, saveresult;
 
 	addresult = addmsg('a', "hello world");
-	clearlog();
 	file = getlog();
 	saveresult = savelog("filename");
+	clearlog();
 	printf("%d, %s, %d", addresult, file, saveresult);
 	
 	return EXIT_SUCCESS;
