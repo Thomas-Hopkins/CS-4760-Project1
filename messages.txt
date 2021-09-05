@@ -1,0 +1,10 @@
+F System timeout.
+W Incorrect input!
+W Incorrect input!
+E DISK FULL
+W Incorrect input!
+E DISK FULL
+E DISK FULL
+F System timeout.
+I Could not open file!
+I Could not open file!

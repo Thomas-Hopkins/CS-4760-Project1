@@ -31,6 +31,11 @@ $(LIBLOG_ARC): $(LIBLOG_OBJ)
 $(LIBLOG_OBJ): $(LIBLOG_SRC)
 	$(CC) $(CFLAGS) -o $@ -c $(subst .o,.c, $@)
 
+# Utility executable 
+.PHONY: msggen
+msggen:
+	$(CC) $(CFLAGS) -o genmsgs genmsgs.c
+
 # Clean target
 .PHONY: clean
 clean:
