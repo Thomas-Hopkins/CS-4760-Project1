@@ -9,8 +9,8 @@ DRIVER_OBJ = driver.o
 
 LIBLOG = liblog
 LIBLOG_ARC = liblog.a
-LIBLOG_SRC = addmsg.c clearlog.c getlog.c savelog.c
-LIBLOG_OBJ = addmsg.o clearlog.o getlog.o savelog.o
+LIBLOG_SRC = log.c
+LIBLOG_OBJ = log.o
 
 CLEAN = $(LIBLOG_ARC) $(LIBLOG_OBJ) $(DRIVER) $(DRIVER_OBJ)
 
