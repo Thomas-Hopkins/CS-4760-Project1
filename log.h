@@ -13,9 +13,9 @@ typedef struct list_struct {
 	struct list_struct* next;
 } list_log;
 
-list_log* headptr;
-list_log* tailptr;
-int listlog_size;
+extern list_log* headptr;
+extern list_log* tailptr;
+extern int listlog_size;
 
 int addmsg(const char type, const char* msg);
 void clearlog();

@@ -1,9 +1,8 @@
-#include <errno.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <time.h>
 #include <string.h>
 #include "log.h"
-#include "log.c"
 
 int addmsg(const char type, const char* msg) {
 	// Declare the new item and it's size
@@ -22,19 +21,23 @@ int addmsg(const char type, const char* msg) {
 	// Set item's data members
 	new_item->item.time = time(NULL);
 	new_item->item.type = type;
-	new_item->item.string = (char *)new_item + sizeof(list_log);
+	new_item->item.string = (char *)malloc(strlen(msg) + 1);
 	
 	// Copy the string into the item
 	strcpy(new_item->item.string, msg);
 	
 	// set list ptrs 
 	if (headptr == NULL) {
+		// First element, set the headptr and point it to tailptr
 		headptr = new_item;
+		headptr->next = tailptr;
 	} else {
+		// append this item to back of list
 		tailptr->next = new_item;
 	}
-
+	// Advance tailptr to end of the list
 	tailptr = new_item;
 	listlog_size++;
 	return 0;
 }
+

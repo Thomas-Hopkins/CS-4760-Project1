@@ -52,11 +52,13 @@ int main(int argc, char** argv) {
 	char* file;
 	int addresult, saveresult;
 
-	addresult = addmsg('a', "hello world");
+	addmsg('a', "hello should not see");
+	clearlog();
+	addmsg('a', "hello world should see");
 	file = getlog();
 	saveresult = savelog("filename");
 	clearlog();
-	printf("%d, %s, %d", addresult, file, saveresult);
+	//printf("logfile:\n%s\n", file);
 	
 	return EXIT_SUCCESS;
 }

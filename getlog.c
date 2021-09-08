@@ -1,21 +1,33 @@
-#include <errno.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include "log.h"
-#include "log.c"
 
 char* getlog() {
-	// TODO: allocate enough space for a string containing all log messages and return it return NULL upon failure
-	char* log = (char*)malloc(sizeof(char*) * listlog_size);
-	if (log == NULL) return NULL; // Could not allocate memory
-	list_log* listlog_item = tailptr;
+	// TODO: Fix returned memory not being valid
+	long unsigned int memsize = 0;
+	list_log* listlog_item = headptr;
 	data_t curritem;
 	
-	for (int i = 0; i < listlog_size; i++) {
+	// Calculate needed memory space by adding all string item sizes
+	for (int i = 0; i < listlog_size; i++) {	
 		curritem = listlog_item->item;
-		strncat(log, curritem.string, sizeof(char*) * listlog_size);
+		printf("char size:%ld, stringlen:%ld, shouldbe:%ld\n", sizeof(char), strlen(curritem.string), sizeof(char) * strlen(curritem.string));
+		memsize += sizeof(char) * strlen(curritem.string);
+		listlog_item = listlog_item->next;
+	}
+
+	// Try to allocate the memory
+	char* log = (char*)malloc(memsize);
+	if (log == NULL) return NULL; // Could not allocate memory
+
+	// Reset item to head and append all log messages for return 
+	listlog_item = headptr;
+	for (int i = 0; i < listlog_size; i++) {
+		strncat(log, curritem.string, sizeof(char) * strlen(curritem.string));
 		listlog_item = listlog_item->next;
 	}
 
 	return log;
 }
+

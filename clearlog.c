@@ -1,17 +1,17 @@
-#include <errno.h>
 #include <stdlib.h>
-#include <string.h>
 #include "log.h"
-#include "log.c"
 
 void clearlog() {
-	// TODO: release all storage for the list
-	while (listlog_size != 0) {
-		list_log* tmp = tailptr;
-		tailptr = tailptr->next;
-		free(tmp);
+	// Start at list head and iteratively free each item's heap memory until end of list
+	while (listlog_size > 0) {
+		list_log* tmp = headptr;
+		headptr = headptr->next;
+		free(tmp->item.string);
 		tmp = NULL;
 		listlog_size--;
 	}
+	// Reset head and tail ptrs
+	headptr = NULL;
+	tailptr = NULL;
 }
 
