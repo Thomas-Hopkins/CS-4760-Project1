@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
 	int addresult, saveresult;
 	char* logfile;
 
-	addmsg('a', "hello world should see");
+	addmsg('I', "hello world should see");
 	//addmsg('a', "hello world2");
 	logfile = getlog();
 	saveresult = savelog("filename");

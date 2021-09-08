@@ -13,6 +13,8 @@ typedef struct list_struct {
 	struct list_struct* next;
 } list_log;
 
+extern const char msg_types[];
+extern const int msgtypes_size;
 extern list_log* headptr;
 extern list_log* tailptr;
 extern int listlog_size;

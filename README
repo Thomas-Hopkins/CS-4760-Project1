@@ -1,0 +1,38 @@
+|---- README LOGGING UTILITY -----|
+|---- AUTHOR: Thomas Hopkins -----|
+|----  UMSL CMPSCI-4760-002  -----|
+
+|- COMPILING -|
+The provided Makefile will build both the logging utility
+	static archive and the driver program and link them
+	together. 
+Simply run "make" and the "driver" executable will be 
+	outputted. Run the driver executable to simulate how
+	the logging utility would be used.
+A cleaning function is provided. run "make clean" to clean up
+	the directory and leave only src behind.
+Make will also output the liblog.a static archive. This can
+	be used in other programs by linking it.
+
+TODO: Remove this if msggen included in driver
+A small optional utility to generate fake logging messages 
+	is also included. Compile this with "make msggen"
+	./msggen will generate a text file with fake log
+	messages to be used by the driver program.
+
+|- USAGE -|
+The driver program simulates a program that may utilize
+	the logging utlity to log messages to a specified
+	file.
+
+The driver program has two optional arguements:
+-t [sec] Specifies the average amount of time between
+	messages the user wishes to simulate. The driver
+	will randomly choose a time between 0-2*sec.
+[filename] Specifies the output file the logging messages
+	will be saved to. By default this is "filename".
+
+|- FUNCTIONALITY -|
+TODO: Write this
+|- ISSUES -|
+TODO: Write this

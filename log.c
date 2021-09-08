@@ -4,6 +4,9 @@
 #include <string.h>
 #include "log.h"
 
+const char msg_types[] = {'I', 'W', 'E', 'F'};
+const int msgtypes_size = 4;
+
 list_log* headptr = NULL;
 list_log* tailptr = NULL;
 int listlog_size = 0;

@@ -2,9 +2,22 @@
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
+#include <errno.h>
 #include "log.h"
 
+int ismsgtype(const char type) {
+	for (int i = 0; i < msgtypes_size; i++) {
+		if (type == msg_types[i]) return 0;
+	}
+	return -1;
+}
+
 int addmsg(const char type, const char* msg) {
+	// Validate message type
+	if (ismsgtype(type) < 0) {
+		errno = EINVAL;
+		return -1;
+	}
 	// Declare the new item and it's size
 	list_log* new_item;
 	int item_size;
@@ -15,6 +28,7 @@ int addmsg(const char type, const char* msg) {
 	// Attempt to allocate space for the new item
 	if ((new_item = (list_log *)(malloc(item_size))) ==  NULL) {
 		// Failed to add new item
+		errno = ENOMEM;
 		return -1;
 	}
 	
@@ -22,7 +36,11 @@ int addmsg(const char type, const char* msg) {
 	new_item->item.time = time(NULL);
 	new_item->item.type = type;
 	new_item->item.string = (char *)malloc(strlen(msg) + 1);
-	
+	// Failed to allocate space for message
+	if (new_item->item.string == NULL) {
+		errno = ENOMEM;
+		return -1;
+	}
 	// Copy the string into the item
 	strcpy(new_item->item.string, msg);
 	
