@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <errno.h>
 #include "log.h"
 
 int savelog(char* filename) {
@@ -9,6 +10,12 @@ int savelog(char* filename) {
 	list_log* curr = headptr;
 	time_t tm;
 	struct tm* tp;
+
+	// Make sure file is opened
+	if (file_log == NULL) {
+		errno = EIO;
+		return -1;
+	}
 
 	// Iterate over the log list until we reach the ending nullptr
 	while (curr != NULL) {
