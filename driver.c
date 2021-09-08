@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "log.h"
 
 void help() {
 	printf("Logging utility usage\n");
@@ -49,16 +50,15 @@ int main(int argc, char** argv) {
 	printf("out_sec: %d\n", out_sec);
 	if (log_file != NULL) printf("log_file: %s\n", log_file);
 	
-	char* file;
 	int addresult, saveresult;
+	char* logfile;
 
-	addmsg('a', "hello should not see");
-	clearlog();
 	addmsg('a', "hello world should see");
-	file = getlog();
+	//addmsg('a', "hello world2");
+	logfile = getlog();
 	saveresult = savelog("filename");
 	clearlog();
-	//printf("logfile:\n%s\n", file);
+	printf("logfile:\n%s\n", logfile);
 	
 	return EXIT_SUCCESS;
 }

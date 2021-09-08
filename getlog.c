@@ -4,7 +4,6 @@
 #include "log.h"
 
 char* getlog() {
-	// TODO: Fix returned memory not being valid
 	long unsigned int memsize = 0;
 	list_log* listlog_item = headptr;
 	data_t curritem;
@@ -24,6 +23,7 @@ char* getlog() {
 	// Reset item to head and append all log messages for return 
 	listlog_item = headptr;
 	for (int i = 0; i < listlog_size; i++) {
+		curritem = listlog_item->item;
 		strncat(log, curritem.string, sizeof(char) * strlen(curritem.string));
 		listlog_item = listlog_item->next;
 	}
