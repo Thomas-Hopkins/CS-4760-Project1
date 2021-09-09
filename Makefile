@@ -3,9 +3,9 @@ CFLAGS = -Wall -g
 
 DRIVER = driver
 DRIVER_LIB = log
-DRIVER_DEP = log.h
-DRIVER_SRC = driver.c
-DRIVER_OBJ = driver.o
+DRIVER_DEP = log.h msggen.h
+DRIVER_SRC = driver.c msggen.c
+DRIVER_OBJ = driver.o msggen.o
 
 LIBLOG = liblog
 LIBLOG_ARC = liblog.a
@@ -19,7 +19,7 @@ all: $(LIBLOG_ARC) $(DRIVER)
 
 # Compile driver executable
 $(DRIVER): $(DRIVER_OBJ) $(DRIVER_DEP) $(LIBLOG_ARC)
-	$(CC) $(CFLAGS) -o $@ $< -L. -l$(DRIVER_LIB)
+	$(CC) $(CFLAGS) -o $@ $(DRIVER_OBJ) -L. -l$(DRIVER_LIB)
 
 # build liblog static archive 
 $(LIBLOG_ARC): $(LIBLOG_OBJ)
@@ -28,10 +28,6 @@ $(LIBLOG_ARC): $(LIBLOG_OBJ)
 # Compile object files from src
 %.o: %.c 
 	$(CC) $(CFLAGS) -o $@ -c $<
-
-.PHONY: msggen
-msggen:
-	$(CC) $(CFLAGS) -o msggen genmsgs.c
 
 # Clean target
 .PHONY: clean

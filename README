@@ -14,12 +14,6 @@ A cleaning function is provided. run "make clean" to clean up
 Make will also output the liblog.a static archive. This can
 	be used in other programs by linking it.
 
-TODO: Remove this if msggen included in driver
-A small optional utility to generate fake logging messages 
-	is also included. Compile this with "make msggen"
-	./msggen will generate a text file with fake log
-	messages to be used by the driver program.
-
 |- USAGE -|
 The driver program simulates a program that may utilize
 	the logging utlity to log messages to a specified
@@ -33,6 +27,11 @@ The driver program has two optional arguements:
 	will be saved to. By default this is "filename".
 
 |- FUNCTIONALITY -|
-TODO: Write this
-|- ISSUES -|
-TODO: Write this
+The driver program will randomly generate a series of messages
+	to be logged by the logging utility program.
+The logging utility program will generate an internal list
+	of these messages and save them out to a file when
+	called to do so.
+
+|- KNOWN ISSUES -|
+Getlog currently does not properly return the log messages.

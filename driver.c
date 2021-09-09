@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <unistd.h>
+#include <errno.h>
 #include "log.h"
+#include "msggen.h"
 
 void help() {
 	printf("Logging utility usage\n");
@@ -12,10 +15,16 @@ void help() {
 	printf("\n");
 }
 
+void waitavgsec(int sec) {
+	int time = 0;
+	if (sec != 0) time = rand() % (2*sec);
+	sleep(time);
+}
+
 int main(int argc, char** argv) {
 	char* exe_name = argv[0];
 	int out_sec = 0;
-	char* log_file = NULL;
+	char* log_file = "messages.log";
 	int option;
 	// Get flag arguments with getopt
 	while ((option = getopt(argc, argv, "ht:")) != -1) {
@@ -29,7 +38,9 @@ int main(int argc, char** argv) {
 				// assume non int if out_sec is zero, there is no strtoi in std C
 				// and atoi does not produce error messages
 				if (out_sec == 0) {
-					fprintf(stderr, "%s: Error: %s is not a valid integer.", exe_name, optarg);
+					errno = EINVAL;
+					fprintf(stderr, "%s: ", exe_name);
+					perror("Passed invalid integer for time");
 					return EXIT_FAILURE;
 				}
 				break;
@@ -42,23 +53,38 @@ int main(int argc, char** argv) {
 	while (optind < argc) {
 		log_file = argv[optind++];
 		if (optind < argc) {
-			fprintf(stderr, "%s: Error: Got more than one logfile name (%s) passed.\n", exe_name, argv[optind]);
+			errno = EINVAL;
+			fprintf(stderr, "%s: ", exe_name);
+			perror("Got more than one logfile passed");
 		}
 	}
-
-	// Temp print out TODO: logging functionality
-	printf("out_sec: %d\n", out_sec);
-	if (log_file != NULL) printf("log_file: %s\n", log_file);
 	
-	int addresult, saveresult;
-	char* logfile;
-
-	addmsg('I', "hello world should see");
-	//addmsg('a', "hello world2");
-	logfile = getlog();
-	saveresult = savelog("filename");
+	// Generate messages and send them to logging utility.
+	// Wait specified time between messages.
+	const int MSG_NUM = 5;
+	for (int i = 0; i < MSG_NUM; i++) {
+		if (addmsg(genrandtype(), genrandmsg()) < 0) {
+			fprintf(stderr, "%s: ", exe_name);
+			perror("Failed to add log message");
+		}
+		waitavgsec(out_sec);
+	}
+	
+	// Save the log to file
+	if (savelog(log_file) < 0) {
+		fprintf(stderr, "%s: ", exe_name);
+		perror("Failed to save log file");
+	}
+	
+	// Get log string
+	char* logstr;
+	if ((logstr = getlog()) == NULL) {
+		fprintf(stderr, "%s: ", exe_name);
+		perror("Failed to get log messages");
+	}
+	//TODO: Fix thism from returning junk data
+	//printf("Log file:\n%s\n", logstr);
+	
 	clearlog();
-	printf("logfile:\n%s\n", logfile);
-	
 	return EXIT_SUCCESS;
 }
