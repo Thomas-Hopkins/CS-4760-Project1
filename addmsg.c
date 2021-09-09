@@ -12,6 +12,13 @@ int ismsgtype(const char type) {
 	return -1;
 }
 
+int isfataltype(const char type) {
+	for (int i = 0; i < fataltypes_size; i++) {
+		if (type == fatal_types[i]) return 1;
+	}
+	return 0;
+}
+
 int addmsg(const char type, const char* msg) {
 	// Validate message type
 	if (ismsgtype(type) < 0) {
@@ -56,6 +63,13 @@ int addmsg(const char type, const char* msg) {
 	// Advance tailptr to end of the list
 	tailptr = new_item;
 	listlog_size++;
+
+	// Check if fatal message
+	if (isfataltype(type) > 0) {
+		savelog(def_logfile);
+		exit(EXIT_FAILURE);
+	}
+	
 	return 0;
 }
 

@@ -13,7 +13,10 @@ typedef struct list_struct {
 	struct list_struct* next;
 } list_log;
 
+extern const char* def_logfile;
 extern const char msg_types[];
+extern const char fatal_types[];
+extern const int fataltypes_size;
 extern const int msgtypes_size;
 extern list_log* headptr;
 extern list_log* tailptr;
