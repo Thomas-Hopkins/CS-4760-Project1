@@ -2,6 +2,7 @@
 #define MSGGEN_H
 
 char genrandtype();
+char genfataltype();
 char* genrandmsg();
 
 #endif

@@ -11,6 +11,7 @@ void help() {
 	printf("\n");
 	printf("[logfile]\tSet the filename to output logging messages to.\n");
 	printf("[-t sec]\tSet the average time in seconds to output logging messages.\n");
+	printf("[-f]\tGenerate a fatal logging message.\n");
 	printf("[-h]\tShow this help dialogue.\n");
 	printf("\n");
 }
@@ -22,12 +23,13 @@ void waitavgsec(int sec) {
 }
 
 int main(int argc, char** argv) {
+	int fatal = 0;
 	char* exe_name = argv[0];
 	int out_sec = 0;
 	char* log_file = "messages.log";
 	int option;
 	// Get flag arguments with getopt
-	while ((option = getopt(argc, argv, "ht:")) != -1) {
+	while ((option = getopt(argc, argv, "hft:")) != -1) {
 		switch(option) {
 			case 'h':
 				help();
@@ -44,6 +46,9 @@ int main(int argc, char** argv) {
 					return EXIT_FAILURE;
 				}
 				break;
+			case 'f':
+				fatal = 1;
+				break;		
 			case '?':
 				// getopt should handle stderr msgs
 				return EXIT_FAILURE;
@@ -63,11 +68,21 @@ int main(int argc, char** argv) {
 	// Wait specified time between messages.
 	const int MSG_NUM = 5;
 	for (int i = 0; i < MSG_NUM; i++) {
-		int ret_code = addmsg(genrandtype(), genrandmsg());
+		char (*gentypeptr)(void); // function pointer to control what generator
+		// Simulate a fatal log message if user passed -f arg
+		if ((i + 1 == MSG_NUM) && (fatal > 0)) { 
+			gentypeptr = &genfataltype;
+		} else {
+			gentypeptr = &genrandtype;
+		}
+
+		// Generate random message and add it		
+		int ret_code = addmsg(gentypeptr(), genrandmsg());
 		if (ret_code < 0) {
 			fprintf(stderr, "%s: ", exe_name);
 			perror("Failed to add log message");
 		} 
+		// addmsg must have encountered a fatal type message.
 		else if (ret_code > 0) {
 			savelog(log_file);
 			fprintf(stderr, "%s: ", exe_name);

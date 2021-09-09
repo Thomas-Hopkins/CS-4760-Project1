@@ -5,18 +5,19 @@
 #include <errno.h>
 #include "log.h"
 
-int ismsgtype(const char type) {
-	for (int i = 0; i < msgtypes_size; i++) {
-		if (type == msg_types[i]) return 0;
-	}
-	return -1;
-}
-
 int isfataltype(const char type) {
 	for (int i = 0; i < fataltypes_size; i++) {
 		if (type == fatal_types[i]) return 1;
 	}
 	return 0;
+}
+
+int ismsgtype(const char type) {
+	for (int i = 0; i < msgtypes_size; i++) {
+		if (type == msg_types[i]) return 0;
+	}
+	if (isfataltype(type) > 0) return 0;
+	return -1;
 }
 
 int addmsg(const char type, const char* msg) {

@@ -1,10 +1,9 @@
 #include <stdlib.h>
+#include "log.h"
 
 #define MSGS_NUM 10
 
-int type_range = 4;
 int message_range = 5;
-char type_map[] = {'I', 'W', 'E', 'F'};
 char* messages[] = {
 	"Could not open file!",
 	"Incorrect input!",
@@ -14,8 +13,13 @@ char* messages[] = {
 	};
 
 char genrandtype() {
-	int ind = rand() % type_range;
-	return type_map[ind];
+	int ind = rand() % msgtypes_size;
+	return msg_types[ind];
+}
+
+char genfataltype() {
+	int ind = rand() % fataltypes_size;
+	return fatal_types[ind];
 }
 
 char* genrandmsg() {

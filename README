@@ -23,6 +23,8 @@ The driver program has two optional arguements:
 -t [sec] Specifies the average amount of time between
 	messages the user wishes to simulate. The driver
 	will randomly choose a time between 0-2*sec.
+-f Forces generation of a fatal type log message. This allows
+	testing of this functionality.
 [filename] Specifies the output file the logging messages
 	will be saved to. By default this is "filename".
 
@@ -33,5 +35,21 @@ The logging utility program will generate an internal list
 	of these messages and save them out to a file when
 	called to do so.
 
-|- KNOWN ISSUES -|
-Getlog currently does not properly return the log messages.
+
+|- KNOWN ISSUES/LIMITATIONS -|
+getlog will get all log messages that are currently loaded, not
+	read them from the logfile. This is because in the 
+	function/utility prototype there was no way to know
+	what file the user had specified to save to.
+
+addmsg does not immediately exit upon recieving a fatal message.
+	Instead it sends a signal back to the driver program to
+	handle it there. This is because addmsg also does not
+	have a reference to what file the user wants to save to.
+
+The driver program does not read from a file which stores fake
+	log messages, instead it generates them by itself. As
+	a result it can generate a fatal message causing the 
+	logger to stop, bypassing the later functionality. To
+	stop this the driver program will only generate a fatal
+	message when passed -f argument.
