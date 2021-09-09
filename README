@@ -14,6 +14,7 @@ A cleaning function is provided. run "make clean" to clean up
 Make will also output the liblog.a static archive. This can
 	be used in other programs by linking it.
 
+
 |- USAGE -|
 The driver program simulates a program that may utilize
 	the logging utlity to log messages to a specified
@@ -28,12 +29,19 @@ The driver program has two optional arguements:
 [filename] Specifies the output file the logging messages
 	will be saved to. By default this is "filename".
 
+
 |- FUNCTIONALITY -|
 The driver program will randomly generate a series of messages
 	to be logged by the logging utility program.
 The logging utility program will generate an internal list
 	of these messages and save them out to a file when
 	called to do so.
+
+
+|- WHATS NEW -|
+msggen.c/.h generate procedurally random messages and types from
+	a list. This is used by the driver program to addmsgs to
+	the logging utlity.
 
 
 |- KNOWN ISSUES/LIMITATIONS -|
