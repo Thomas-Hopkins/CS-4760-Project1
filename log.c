@@ -4,7 +4,6 @@
 #include <string.h>
 #include "log.h"
 
-const char* def_logfile = "messages.log";
 const char msg_types[] = {'I', 'W', 'E', 'F'};
 const char fatal_types[] = {msg_types[3]};
 const int fataltypes_size = 1;

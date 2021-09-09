@@ -13,7 +13,6 @@ typedef struct list_struct {
 	struct list_struct* next;
 } list_log;
 
-extern const char* def_logfile;
 extern const char msg_types[];
 extern const char fatal_types[];
 extern const int fataltypes_size;
@@ -25,6 +24,6 @@ extern int listlog_size;
 int addmsg(const char type, const char* msg);
 void clearlog();
 char* getlog();
-int savelog(char* filename);
+int savelog(const char* filename);
 
 #endif

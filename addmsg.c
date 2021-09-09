@@ -66,8 +66,9 @@ int addmsg(const char type, const char* msg) {
 
 	// Check if fatal message
 	if (isfataltype(type) > 0) {
-		savelog(def_logfile);
-		exit(EXIT_FAILURE);
+		// Because we don't have a reference to the user defined filename
+		// Lets let the calling program handle this.
+		return 1;
 	}
 	
 	return 0;

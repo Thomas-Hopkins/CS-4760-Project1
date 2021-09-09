@@ -63,9 +63,16 @@ int main(int argc, char** argv) {
 	// Wait specified time between messages.
 	const int MSG_NUM = 5;
 	for (int i = 0; i < MSG_NUM; i++) {
-		if (addmsg(genrandtype(), genrandmsg()) < 0) {
+		int ret_code = addmsg(genrandtype(), genrandmsg());
+		if (ret_code < 0) {
 			fprintf(stderr, "%s: ", exe_name);
 			perror("Failed to add log message");
+		} 
+		else if (ret_code > 0) {
+			savelog(log_file);
+			fprintf(stderr, "%s: ", exe_name);
+			perror("Fatal error encountered");
+			exit(EXIT_FAILURE);
 		}
 		waitavgsec(out_sec);
 	}
@@ -83,7 +90,7 @@ int main(int argc, char** argv) {
 		perror("Failed to get log messages");
 	}
 	//TODO: Fix thism from returning junk data
-	//printf("Log file:\n%s\n", logstr);
+	printf("Log file:\n%s\n", logstr);
 	
 	clearlog();
 	return EXIT_SUCCESS;

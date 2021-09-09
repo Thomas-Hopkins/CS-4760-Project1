@@ -4,11 +4,10 @@
 #include <errno.h>
 #include "log.h"
 
-int savelog(char* filename) {
+int savelog(const char* filename) {
 	// Open file for append and setup time and pointer to list log
 	FILE* file_log = fopen(filename, "a");
 	list_log* curr = headptr;
-	time_t tm;
 	struct tm* tp;
 
 	// Make sure file is opened
